@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-<h2>Все записи:</h2>
 <div id="container">
     <%
         try {
