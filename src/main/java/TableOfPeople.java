@@ -14,6 +14,8 @@ public class TableOfPeople {
             SplitDate dateOfBirth = new SplitDate(date);
             preparedStatement.setDate(4, new Date(dateOfBirth.getYear() - 1900, dateOfBirth.getMonth() - 1, dateOfBirth.getDay()));
             boolean add = preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
 
             //вывод
 //            Statement statement = connection.createStatement();
