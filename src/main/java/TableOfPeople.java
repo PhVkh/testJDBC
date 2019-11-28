@@ -1,5 +1,7 @@
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class TableOfPeople {
     public static void addPerson(String name, String lastName, String patronymic, String date) {
@@ -11,21 +13,24 @@ public class TableOfPeople {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setString(3, patronymic);
-            SplitDate dateOfBirth = new SplitDate(date);
-            preparedStatement.setDate(4, new Date(dateOfBirth.getYear() - 1900, dateOfBirth.getMonth() - 1, dateOfBirth.getDay()));
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(("d.MM.yyyy"));
+            LocalDate dateOfBirth = LocalDate.parse(date, formatter);
+            preparedStatement.setDate(4, Date.valueOf(dateOfBirth));
+
             boolean add = preparedStatement.execute();
             preparedStatement.close();
-            connection.close();
 
             //вывод
-//            Statement statement = connection.createStatement();
-//            ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
-//            while (resultSet.next()) {
-//                System.out.println(resultSet.getString("name") + "\t" +
-//                        resultSet.getString("last_name") + "\t" +
-//                        resultSet.getString("patronymic") + "\t" +
-//                        resultSet.getString("date_of_birth"));
-//            }
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("name") + "\t" +
+                        resultSet.getString("last_name") + "\t" +
+                        resultSet.getString("patronymic") + "\t" +
+                        resultSet.getString("date_of_birth"));
+            }
+            connection.close();
         } catch (ClassNotFoundException e) {
             System.out.println("PostgreSQL JDBC driver not found.");
             e.printStackTrace();

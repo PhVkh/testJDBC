@@ -14,6 +14,7 @@ public class AddPersonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(req.getParameter("name"));
         TableOfPeople.addPerson(req.getParameter("name"),
                 req.getParameter("lastName"),
                 req.getParameter("patronymic"),
