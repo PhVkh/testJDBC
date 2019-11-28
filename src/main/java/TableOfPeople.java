@@ -20,16 +20,6 @@ public class TableOfPeople {
 
             boolean add = preparedStatement.execute();
             preparedStatement.close();
-
-            //вывод
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("name") + "\t" +
-                        resultSet.getString("last_name") + "\t" +
-                        resultSet.getString("patronymic") + "\t" +
-                        resultSet.getString("date_of_birth"));
-            }
             connection.close();
         } catch (ClassNotFoundException e) {
             System.out.println("PostgreSQL JDBC driver not found.");
@@ -38,5 +28,22 @@ public class TableOfPeople {
             System.out.println("Connection failure.");
             e.printStackTrace();
         }
+    }
+
+    public static Array showAll() {
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test", "postgres", "asdqwe123");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
+            return resultSet.getArray(1);
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL JDBC driver not found.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Connection failure.");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

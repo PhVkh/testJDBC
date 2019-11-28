@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.sql.*"%>
+<%@ page language="java" contentType="text/html; UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,29 +8,9 @@
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-<div id="container">
-    <%
-        try {
-            Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/test", "postgres", "asdqwe123");
-
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
-            while (resultSet.next()) {
-                response.getWriter().write(resultSet.getString("name") + "    " +
-                        resultSet.getString("last_name") + "    " +
-                        resultSet.getString("patronymic") + "    " +
-                        resultSet.getString("date_of_birth") + "<br>");
-            }
-            connection.close();
-        } catch (ClassNotFoundException e) {
-            System.out.println("PostgreSQL JDBC driver not found.");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("Connection failure.");
-            e.printStackTrace();
-        }
-    %>
-</div>
+<jsp:useBean id="resultSet" scope="request" type="java.sql.Array"/>
+<c:forEach items="${resultSet}" var="post">
+    ${post}<br>
+</c:forEach>
 </body>
 </html>
