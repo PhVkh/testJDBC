@@ -1,0 +1,24 @@
+#container {
+    width: 260px;
+    margin: 50px auto;
+    padding: 10px;
+}
+
+input {
+    width: 250px;
+    border: 0 solid;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#button {
+    width: 260px;
+    margin-bottom: 0;
+    background: #303030;
+    color: white;
+}
+
+form {
+    width: 260px;
+    margin: 0 auto;
+}
