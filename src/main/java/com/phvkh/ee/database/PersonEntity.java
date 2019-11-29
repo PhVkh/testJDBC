@@ -7,16 +7,9 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name = "people")
 public class PersonEntity {
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "patronymic")
     private String patronymic;
-
-    @Column(name = "date_of_birth")
     private LocalDate date;
 
     public PersonEntity(String name, String lastName, String patronymic, String date) {
@@ -32,18 +25,22 @@ public class PersonEntity {
     public PersonEntity() {
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
 
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
 
+    @Column(name = "patronymic")
     public String getPatronymic() {
         return patronymic;
     }
 
+    @Column(name = "date_of_birth")
     public LocalDate getDate() {
         return date;
     }

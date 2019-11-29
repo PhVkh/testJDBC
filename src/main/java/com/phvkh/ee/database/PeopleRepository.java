@@ -1,5 +1,6 @@
 package com.phvkh.ee.database;
 import com.phvkh.ee.dto.Person;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -13,12 +14,12 @@ import java.util.List;
 public class PeopleRepository {
     private static PeopleRepository instance;
     private SessionFactory sessionFactory;
-//    private String url = "jdbc:postgresql://localhost:5432/test";
-//    private String user = "postgres";
-//    private String password = "asdqwe123";
+    private String url = "jdbc:postgresql://localhost:5432/test";
+    private String user = "postgres";
+    private String password = "asdqwe123";
 
     private PeopleRepository() {
-        Configuration config = new Configuration().configure();
+        Configuration config = new Configuration().configure("resources/hibernate.cfg.xml");
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(config.getProperties());
         sessionFactory = config.buildSessionFactory();
@@ -36,32 +37,12 @@ public class PeopleRepository {
     }
 
     public void addPerson(Person person) {
-
-//        try {
-//            try {
-//                Class.forName("org.postgresql.Driver");
-//                Connection connection = DriverManager.getConnection(url, user, password);
-//                String sql = "INSERT INTO people VALUES(?, ?, ?, ?)";
-//                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//                preparedStatement.setString(1, person.getName());
-//                preparedStatement.setString(2, person.getLastName());
-//                preparedStatement.setString(3, person.getPatronymic());
-//
-//                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(("d.MM.yyyy"));
-//                LocalDate dateOfBirth = LocalDate.parse(person.getDateOfBirth(), formatter);
-//                preparedStatement.setDate(4, Date.valueOf(dateOfBirth));
-//
-//                boolean add = preparedStatement.execute();
-//                preparedStatement.close();
-//                connection.close();
-//            } catch (ClassNotFoundException e) {
-//                System.out.println("PostgreSQL JDBC driver not found.");
-//                e.printStackTrace();
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Connection failure.");
-//            e.printStackTrace();
-//        }
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        PersonEntity personEntity = new PersonEntity(person.getName(), person.getLastName(), person.getPatronymic(), person.getDateOfBirth());
+        session.save(personEntity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public List<Person> showAll() {
