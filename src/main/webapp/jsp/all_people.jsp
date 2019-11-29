@@ -8,9 +8,8 @@
     <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-<jsp:useBean id="resultSet" scope="request" type="java.sql.Array"/>
 <c:forEach items="${resultSet}" var="post">
-    ${post}<br>
+    ${post.name} ${post.lastName} ${post.patronymic} ${post.dateOfBirth}<br>
 </c:forEach>
 </body>
 </html>
