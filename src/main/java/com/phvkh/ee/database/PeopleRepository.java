@@ -1,10 +1,15 @@
 package com.phvkh.ee.database;
+import com.fasterxml.classmate.AnnotationConfiguration;
 import com.phvkh.ee.dto.Person;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,10 +24,7 @@ public class PeopleRepository {
     private String password = "asdqwe123";
 
     private PeopleRepository() {
-        Configuration config = new Configuration().configure("resources/hibernate.cfg.xml");
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(config.getProperties());
-        sessionFactory = config.buildSessionFactory();
+        sessionFactory = new  Configuration().configure().buildSessionFactory();
     }
 
     public static PeopleRepository getInstance() {
