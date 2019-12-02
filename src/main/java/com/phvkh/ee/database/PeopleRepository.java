@@ -14,6 +14,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PeopleRepository {
@@ -48,31 +49,11 @@ public class PeopleRepository {
     }
 
     public List<Person> showAll() {
-        try {
-            try {
-                Class.forName("org.postgresql.Driver");
-                Connection connection = DriverManager.getConnection(url, user, password);
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM people");
-                List<Person> people = new ArrayList<>();
-                while (resultSet.next()) {
-                    String name = resultSet.getString("name");
-                    String lastName = resultSet.getString("last_name");
-                    String patronymic = resultSet.getString("patronymic");
-                    String dateOfBirth = resultSet.getString("date_of_birth");
-                    people.add(new Person(name, lastName, patronymic, dateOfBirth));
-                }
-                connection.close();
-                return people;
-            } catch (ClassNotFoundException e) {
-                System.out.println("PostgreSQL JDBC driver not found.");
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            System.out.println("Connection failure.");
-            e.printStackTrace();
-        }
-        return null;
+        Session session = getSessionFactory().openSession();
+        session.beginTransaction();
+        List people = session.createQuery("FROM PersonEntity").list();
+        session.close();
+        return people;
     }
 }
 

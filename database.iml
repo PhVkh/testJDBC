@@ -18,6 +18,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
+          <factory-entry name="org.hibernate.database" />
           <factory-entry name="org.hibernate.tutorial.jpa" />
         </datasource-mapping>
         <naming-strategy-map />
@@ -28,6 +29,7 @@
       <configuration>
         <datasource-map>
           <unit-entry name="hibernate.cfg.xml" />
+          <unit-entry name="src:main:resources:hibernate.cfg.xml" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
