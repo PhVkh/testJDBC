@@ -18,7 +18,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
-          <factory-entry name="org.hibernate.database" />
+          <factory-entry name="Entities" />
           <factory-entry name="org.hibernate.tutorial.jpa" />
         </datasource-mapping>
         <naming-strategy-map />
