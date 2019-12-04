@@ -1,5 +1,6 @@
 package com.phvkh.ee.database;
 
+import com.phvkh.ee.dto.PersonDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-@Table(name = "people2")
+@Table(name = "people")
 public class PersonEntity {
     @Id
     @Column(name = "id")
@@ -45,13 +46,23 @@ public class PersonEntity {
         return date;
     }
 
-    public PersonEntity(String name, String lastName, String patronymic, String date) {
-        this.name = name;
-        this.lastName = lastName;
-        this.patronymic = patronymic;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private AddressEntity address;
+    public AddressEntity getAddress() {
+        return address;
+    }
+    public void setAddress(AddressEntity address) {
+        this.address = address;
+    }
+
+    public PersonEntity(PersonDTO person) {
+        this.name = person.getName();
+        this.lastName = person.getLastName();
+        this.patronymic = person.getPatronymic();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(("d.MM.yyyy"));
-        LocalDate dateOfBirth = LocalDate.parse(date, formatter);
+        LocalDate dateOfBirth = LocalDate.parse(person.getDateOfBirth(), formatter);
         this.date = dateOfBirth;
     }
 

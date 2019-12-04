@@ -1,7 +1,8 @@
 package com.phvkh.ee.servlets;
 
-import com.phvkh.ee.database.PeopleRepository;
-import com.phvkh.ee.dto.Person;
+import com.phvkh.ee.dto.AddressDTO;
+import com.phvkh.ee.dto.PersonDTO;
+import com.phvkh.ee.service.AddressPersonService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,11 +20,14 @@ public class AddPersonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Person person = new Person(req.getParameter("name"),
+        PersonDTO person = new PersonDTO(req.getParameter("name"),
                 req.getParameter("lastName"),
                 req.getParameter("patronymic"),
                 req.getParameter("date"));
-        PeopleRepository.getInstance().addPerson(person);
+        AddressDTO address = new AddressDTO(req.getParameter("street"),
+                req.getParameter("house"),
+                req.getParameter("flat"));
+        AddressPersonService.addAddressAndPerson(address, person);
         resp.sendRedirect("all");
     }
 }

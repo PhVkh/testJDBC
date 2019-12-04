@@ -13,6 +13,10 @@
                 <input type="text" name="lastName" placeholder="Фамилия"/><br>
                 <input type="text" name="patronymic" placeholder="Отчество"/><br>
                 <input type="text" name="date" placeholder="Дата рождения"/><br>
+                <p>Адрес</p>
+                <input type="text" name="street" placeholder="Улица"/><br>
+                <input type="text" name="house" placeholder="Дом"/><br>
+                <input type="text" name="flat" placeholder="Квартира"/><br>
                 <input type="submit" name="click" value="Добавить" id="button"/>
             </form>
         </div>
