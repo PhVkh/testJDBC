@@ -48,7 +48,7 @@ public class AddressEntity {
         this.flat = flat;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "address")//, cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "address")
     private Set<PersonEntity> occupants = new HashSet<PersonEntity>();
     public Set<PersonEntity> getOccupants() {
         return occupants;

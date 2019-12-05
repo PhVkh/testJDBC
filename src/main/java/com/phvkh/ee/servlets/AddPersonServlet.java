@@ -19,7 +19,7 @@ public class AddPersonServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PersonDTO person = new PersonDTO(req.getParameter("name"),
                 req.getParameter("lastName"),
                 req.getParameter("patronymic"),
@@ -27,7 +27,7 @@ public class AddPersonServlet extends HttpServlet {
         AddressDTO address = new AddressDTO(req.getParameter("street"),
                 req.getParameter("house"),
                 req.getParameter("flat"));
-        AddressPersonService.addAddressAndPerson(address, person);
+        AddressPersonService.getInstance().addAddressAndPerson(address, person);
         resp.sendRedirect("all");
     }
 }

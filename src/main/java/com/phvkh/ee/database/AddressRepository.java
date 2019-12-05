@@ -16,8 +16,7 @@ public class AddressRepository extends Repository {
         return instance;
     }
 
-    public AddressEntity getAddress(AddressEntity address) {
-        Session session = getSessionFactory().openSession();
+    public AddressEntity getAddress(AddressEntity address, Session session) {
         Criteria criteria = session.createCriteria(AddressEntity.class);
         criteria.add(Restrictions.eq("street", address.getStreet()));
         criteria.add(Restrictions.eq("house", address.getHouse()));
@@ -31,24 +30,19 @@ public class AddressRepository extends Repository {
         return null;
     }
 
-    public void addAddress(AddressEntity address, PersonEntity person) {
-        AddressEntity addressEntity = getInstance().getAddress(address);
-        Session session = getSessionFactory().openSession();
-        session.beginTransaction();
-        if (addressEntity == null) {
-            session.save(address);
-            addressEntity = address;
-        }
-        person.setAddress(addressEntity);
+    public void addAddress(AddressEntity address, Session session) {
+        session.save(address);
+    }
+
+    public void addPersonToAddress(AddressEntity address, PersonEntity person, Session session) {
+        person.setAddress(address);
         session.save(person);
-        session.getTransaction().commit();
-        session.close();
     }
 
     public List<AddressEntity> getAllAddressesWithPeople() {
         Session session = getSessionFactory().openSession();
         session.beginTransaction();
-        List addresses = session.createQuery("FROM AddressEntity").list();
+        List<AddressEntity> addresses = session.createQuery("SELECT DISTINCT a FROM AddressEntity a left join fetch a.occupants").list();
         session.close();
         return addresses;
     }

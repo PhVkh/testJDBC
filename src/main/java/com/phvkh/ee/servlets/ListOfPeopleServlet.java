@@ -18,7 +18,7 @@ public class ListOfPeopleServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<AddressDTO, Set<PersonDTO>> resultSet = AddressPersonService.getAllAddressesWithPeople();
+        Map<AddressDTO, Set<PersonDTO>> resultSet = AddressPersonService.getInstance().getAllAddressesWithPeople();
         req.setAttribute("resultSet", resultSet);
         req.getRequestDispatcher("jsp/all_people.jsp").forward(req, resp);
     }
